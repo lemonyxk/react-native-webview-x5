@@ -1,31 +1,34 @@
-# react-native-x5
+# react-native-webview-x5
+
 X5's WebView for React Native on Android (Interfaces based on ReactNative's WebView Component)
 
 ### Dependencies
 
-* 0.0.1： `react-native >= 0.33.0`, `react = 15.3.1`
+-   0.0.1： `react-native >= 0.33.0`, `react = 15.3.1`
 
 ### Installation
 
 #### Install and Link
 
-* Install from npm
+-   Install from npm
 
 ```bash
-npm i react-native-x5 --save
+npm i react-native-webview-x5 --save
 
 ```
 
-* Link native library
+-   Link native library
 
 You can use react-native-cli:
+
 ```bash
-react-native link react-native-x5
+react-native link react-native-webview-x5
 ```
 
 Or rnpm:
+
 ```bash
-rnpm link react-native-x5
+rnpm link react-native-webview-x5
 ```
 
 #### Add uses-permission
@@ -44,13 +47,12 @@ Add those lines to AndroidManifest.xml in your project.
 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 ```
 
-
 ### Usage
 
 #### Import
 
 ```
-import WebView from 'react-native-x5';
+import WebView from 'react-native-webview-x5';
 ```
 
 #### Props
@@ -59,9 +61,8 @@ Totally same as [WebView](http://facebook.github.io/react-native/docs/webview.ht
 
 Additional methods:
 
-* WebView.getX5CoreVersion(callback) `static`
-get X5's core version through callback
-
+-   WebView.getX5CoreVersion(callback) `static`
+    get X5's core version through callback
 
 ```
 WebView.getX5CoreVersion(function callback (version) {
@@ -69,8 +70,6 @@ WebView.getX5CoreVersion(function callback (version) {
 });
 ```
 
-
 ### Detail
 
 [腾讯浏览器服务](http://x5.tencent.com/index)
-

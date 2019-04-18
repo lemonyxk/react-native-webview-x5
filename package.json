@@ -1,60 +1,22 @@
 {
-  "_from": "react-native-x5@^0.0.7",
-  "_id": "react-native-x5@0.0.7",
-  "_inBundle": false,
-  "_integrity": "sha1-WOPf1/BI24Z2X+zbU6RaQIb9BKU=",
-  "_location": "/react-native-x5",
-  "_phantomChildren": {},
-  "_requested": {
-    "type": "range",
-    "registry": true,
-    "raw": "react-native-x5@^0.0.7",
-    "name": "react-native-x5",
-    "escapedName": "react-native-x5",
-    "rawSpec": "^0.0.7",
-    "saveSpec": null,
-    "fetchSpec": "^0.0.7"
-  },
-  "_requiredBy": [
-    "/"
-  ],
-  "_resolved": "https://registry.npmjs.org/react-native-x5/-/react-native-x5-0.0.7.tgz",
-  "_shasum": "58e3dfd7f048db86765fecdb53a45a4086fd04a5",
-  "_spec": "react-native-x5@^0.0.7",
-  "_where": "C:\\Users\\hopes13\\Desktop\\work\\javascript\\react\\pgame",
-  "bugs": {
-    "url": "https://github.com/shimohq/react-native-x5/issues"
-  },
-  "bundleDependencies": false,
-  "deprecated": false,
-  "description": "X5 WebView for react-native",
-  "devDependencies": {
-    "babel-eslint": "^6.1.2",
-    "eslint": "^2.13.1",
-    "eslint-plugin-react": "^4.3.0"
-  },
-  "homepage": "https://github.com/shimohq/react-native-x5#readme",
-  "keywords": [
-    "react-component",
-    "react-native",
-    "X5",
-    "webview",
-    "android",
-    "QQ浏览器",
-    "blink",
-    "webkit"
-  ],
-  "license": "MIT",
-  "name": "react-native-x5",
-  "peerDependencies": {
-    "react-native": ">=0.33.0"
+  "name": "react-native-webview-x5",
+  "version": "1.0.0",
+  "description": "React native android webview",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shimohq/react-native-x5.git"
+    "url": "git+https://github.com/Lemo-yxk/react-native-webview-x5.git"
   },
-  "scripts": {
-    "lint": "eslint ./"
+  "keywords": [
+    "webview"
+  ],
+  "author": "lemo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Lemo-yxk/react-native-webview-x5/issues"
   },
-  "version": "0.0.7"
+  "homepage": "https://github.com/Lemo-yxk/react-native-webview-x5#readme"
 }
