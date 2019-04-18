@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Users/lemo/git/GameAppDev/node_modules/react-native-x5/android/build/intermediates/res/merged/release/layout-v21/notification_action_tombstone.xml",
+        "source": "/Users/lemo/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/2a193bebf5f6a0262fa4f157826fa13a/res/layout-v21/notification_action_tombstone.xml"
+    },
+    {
+        "merged": "/Users/lemo/git/GameAppDev/node_modules/react-native-x5/android/build/intermediates/res/merged/release/layout-v21/notification_action.xml",
+        "source": "/Users/lemo/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/2a193bebf5f6a0262fa4f157826fa13a/res/layout-v21/notification_action.xml"
+    },
+    {
+        "merged": "/Users/lemo/git/GameAppDev/node_modules/react-native-x5/android/build/intermediates/res/merged/release/layout-v21/notification_template_icon_group.xml",
+        "source": "/Users/lemo/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/2a193bebf5f6a0262fa4f157826fa13a/res/layout-v21/notification_template_icon_group.xml"
+    },
+    {
+        "merged": "/Users/lemo/git/GameAppDev/node_modules/react-native-x5/android/build/intermediates/res/merged/release/layout-v21/notification_template_custom_big.xml",
+        "source": "/Users/lemo/.gradle/caches/transforms-1/files-1.1/support-compat-28.0.0.aar/2a193bebf5f6a0262fa4f157826fa13a/res/layout-v21/notification_template_custom_big.xml"
+    }
+]
