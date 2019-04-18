@@ -1,22 +1,21 @@
 {
-  "name": "react-native-webview-x5",
-  "version": "1.0.0",
-  "description": "React native android webview",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Lemo-yxk/react-native-webview-x5.git"
-  },
-  "keywords": [
-    "webview"
-  ],
-  "author": "lemo",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Lemo-yxk/react-native-webview-x5/issues"
-  },
-  "homepage": "https://github.com/Lemo-yxk/react-native-webview-x5#readme"
+    "name": "react-native-webview-x5",
+    "version": "1.0.0",
+    "description": "React native android webview",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Lemo-yxk/react-native-webview-x5.git"
+    },
+    "keywords": [
+        "webview"
+    ],
+    "author": "lemo",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Lemo-yxk/react-native-webview-x5/issues"
+    },
+    "homepage": "https://github.com/Lemo-yxk/react-native-webview-x5#readme"
 }
