@@ -67,4 +67,4 @@ const create = () => {
     return X5WebView;
 };
 
-export default create();
+export default create;

@@ -11,4 +11,4 @@ const create = status => {
     return require("react-native").WebView;
 };
 
-export default create();
+export default create;
