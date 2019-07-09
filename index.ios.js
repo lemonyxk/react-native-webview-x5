@@ -6,12 +6,9 @@ function moduleAvailable(name) {
     return false;
 }
 
-let WebView = null;
+const create = status => {
+    if (status) return require("react-native-webview").WebView;
+    return require("react-native").WebView;
+};
 
-if (moduleAvailable("react-native-webview")) {
-    WebView = require("react-native-webview").WebView;
-} else {
-    WebView = require("react-native").WebView;
-}
-
-export default WebView;
+export default create();

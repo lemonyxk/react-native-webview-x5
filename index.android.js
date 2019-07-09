@@ -63,4 +63,8 @@ class X5WebView extends WebView {
 
 const RNX5WebView = requireNativeComponent("RNX5WebView", X5WebView);
 
-export default X5WebView;
+const create = () => {
+    return X5WebView;
+};
+
+export default create();
