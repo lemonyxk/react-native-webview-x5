@@ -12,8 +12,8 @@ class X5WebView extends WebView {
         });
     };
 
-    static install = function() {
-        NativeModules.X5WebView.install();
+    static install = function(toFile) {
+        NativeModules.X5WebView.install(toFile);
     };
 
     postMessage = data => {
