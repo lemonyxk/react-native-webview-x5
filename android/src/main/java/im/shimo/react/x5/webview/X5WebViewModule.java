@@ -1,29 +1,30 @@
 package im.shimo.react.x5.webview;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.Activity;
+import android.content.ClipData;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Build;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
+import android.util.Log;
+
+import com.facebook.react.bridge.ActivityEventListener;
+import com.facebook.react.bridge.Callback;
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
-import com.facebook.react.bridge.ActivityEventListener;
-import com.facebook.react.common.annotations.VisibleForTesting;
+import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.modules.core.PermissionAwareActivity;
 import com.facebook.react.modules.core.PermissionListener;
 import com.tencent.smtt.sdk.ValueCallback;
-import android.net.Uri;
-import android.content.Intent;
-import android.app.Activity;
-import android.util.Log;
-import android.os.Build;
-import android.Manifest;
-import android.support.v4.content.ContextCompat;
-import android.content.pm.PackageManager;
-import com.facebook.react.modules.core.PermissionAwareActivity;
-import com.facebook.react.modules.core.PermissionListener;
-import android.util.Log;
-import com.facebook.react.bridge.Callback;
-import com.facebook.react.bridge.ReactMethod;
-
-import android.annotation.TargetApi;
-import android.content.ClipData;
 import com.tencent.smtt.sdk.WebView;
+
+import java.io.File;
 
 public class X5WebViewModule extends ReactContextBaseJavaModule implements ActivityEventListener {
 
@@ -72,7 +73,7 @@ public class X5WebViewModule extends ReactContextBaseJavaModule implements Activ
                     }
                 }
                 if (dataString != null)
-                    results = new Uri[] { Uri.parse(dataString) };
+                    results = new Uri[]{Uri.parse(dataString)};
             }
         }
         mUploadCallbackAboveL.onReceiveValue(results);
@@ -85,6 +86,7 @@ public class X5WebViewModule extends ReactContextBaseJavaModule implements Activ
         mReactContext = reactContext;
     }
 
+    @NonNull
     @Override
     public String getName() {
         return "X5WebView";
@@ -93,6 +95,50 @@ public class X5WebViewModule extends ReactContextBaseJavaModule implements Activ
     @ReactMethod
     public void getX5CoreVersion(Callback callback) {
         callback.invoke(WebView.getTbsCoreVersion(mReactContext));
+    }
+
+    // method
+    @ReactMethod
+    public void getAndroidVersion(Promise p) {
+        try {
+            String version = android.os.Build.VERSION.RELEASE;
+            p.resolve(version);
+        } catch (Exception e) {
+            p.reject(e.toString());
+        }
+    }
+
+    @ReactMethod
+    public void install(String apkFile) {
+
+        String cmd = "chmod 777 " + apkFile;
+
+        try {
+            Runtime.getRuntime().exec(cmd);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+            // 赋予临时权限
+            Uri contentUri = FileProvider.getUriForFile(mReactContext, getActivity().getApplication().getPackageName() + ".fileprovider",
+                new File(apkFile));
+            intent.setDataAndType(contentUri, "application/vnd.android.package-archive");
+        } else {
+            // 声明需要的零时权限
+            intent.setDataAndType(Uri.parse("file://" + apkFile), "application/vnd.android.package-archive");
+        }
+
+        mReactContext.startActivity(intent);
+
+        android.os.Process.killProcess(android.os.Process.myPid());
     }
 
     private RNX5WebViewPackage aPackage;
@@ -136,14 +182,14 @@ public class X5WebViewModule extends ReactContextBaseJavaModule implements Activ
         }
         boolean result = true;
         if (ContextCompat.checkSelfPermission(this.getActivity(),
-                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             result = false;
         }
 
         if (!result) {
             PermissionAwareActivity activity = getPermissionAwareActivity();
-            activity.requestPermissions(new String[] { Manifest.permission.READ_EXTERNAL_STORAGE },
-                    FILE_CHOOSER_PERMISSION_REQUEST, webviewFileChooserPermissionListener);
+            activity.requestPermissions(new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                FILE_CHOOSER_PERMISSION_REQUEST, webviewFileChooserPermissionListener);
         }
         return result;
     }
@@ -152,22 +198,22 @@ public class X5WebViewModule extends ReactContextBaseJavaModule implements Activ
         @Override
         public boolean onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
             switch (requestCode) {
-            case FILE_CHOOSER_PERMISSION_REQUEST: {
-                // If request is cancelled, the result arrays are empty.
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (mUploadCallbackAboveL != null) {
-                        openFileChooserView();
-                    }
-                } else {
-                    // Toast.makeText(getActivity().getApplicationContext(),
-                    // "Cannot upload files as permission was denied. Please provide permission to
-                    // access storage, in order to upload files.",
-                    // Toast.LENGTH_LONG).show();
-                    Log.d("customwebview", "Cannot upload files as permission was denied");
+                case FILE_CHOOSER_PERMISSION_REQUEST: {
+                    // If request is cancelled, the result arrays are empty.
+                    if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        if (mUploadCallbackAboveL != null) {
+                            openFileChooserView();
+                        }
+                    } else {
+                        // Toast.makeText(getActivity().getApplicationContext(),
+                        // "Cannot upload files as permission was denied. Please provide permission to
+                        // access storage, in order to upload files.",
+                        // Toast.LENGTH_LONG).show();
+                        Log.d("customwebview", "Cannot upload files as permission was denied");
 
+                    }
+                    return true;
                 }
-                return true;
-            }
             }
             return false;
         }
@@ -179,7 +225,7 @@ public class X5WebViewModule extends ReactContextBaseJavaModule implements Activ
             throw new IllegalStateException("Tried to use permissions API while not attached to an " + "Activity.");
         } else if (!(activity instanceof PermissionAwareActivity)) {
             throw new IllegalStateException("Tried to use permissions API but the host Activity doesn't"
-                    + " implement PermissionAwareActivity.");
+                + " implement PermissionAwareActivity.");
         }
         return (PermissionAwareActivity) activity;
     }

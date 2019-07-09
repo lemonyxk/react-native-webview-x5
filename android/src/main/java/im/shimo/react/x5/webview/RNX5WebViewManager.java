@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Picture;
 import android.net.Uri;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -71,7 +72,7 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
 
     private static final String HTML_ENCODING = "UTF-8";
     private static final String HTML_MIME_TYPE = "text/html; charset=utf-8";
-    private static final String BRIDGE_NAME = "__REACT_WEB_VIEW_BRIDGE";
+    private static final String BRIDGE_NAME = "ReactNativeWebView";
 
     private static final String HTTP_METHOD_POST = "POST";
 
@@ -331,8 +332,9 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
         };
     }
 
+    @NonNull
     @Override
-    protected WebView createViewInstance(ThemedReactContext reactContext) {
+    protected WebView createViewInstance(@NonNull ThemedReactContext reactContext) {
         X5WeView webView = new X5WeView(reactContext);
 
         final X5WebViewModule module = this.aPackage.getModule();
@@ -387,6 +389,7 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
         return webView;
     }
 
+    @NonNull
     @Override
     public String getName() {
         return REACT_CLASS;
@@ -454,11 +457,13 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
                 }
                 if (source.hasKey("method")) {
                     String method = source.getString("method");
+                    assert method != null;
                     if (method.equals(HTTP_METHOD_POST)) {
                         byte[] postData = null;
                         if (source.hasKey("body")) {
                             String body = source.getString("body");
                             try {
+                                assert body != null;
                                 postData = body.getBytes("UTF-8");
                             } catch (UnsupportedEncodingException e) {
                                 postData = body.getBytes();
@@ -474,6 +479,7 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
                 HashMap<String, String> headerMap = new HashMap<>();
                 if (source.hasKey("headers")) {
                     ReadableMap headers = source.getMap("headers");
+                    assert headers != null;
                     ReadableMapKeySetIterator iter = headers.keySetIterator();
                     while (iter.hasNextKey()) {
                         String key = iter.nextKey();
@@ -504,7 +510,7 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
     }
 
     @Override
-    protected void addEventEmitters(ThemedReactContext reactContext, WebView view) {
+    protected void addEventEmitters(@NonNull ThemedReactContext reactContext, @NonNull WebView view) {
         // Do not register default touch emitter and let WebView implementation handle
         // touches
         view.setWebViewClient(new X5WebViewClient());
@@ -519,7 +525,7 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
     }
 
     @Override
-    public void receiveCommand(WebView root, int commandId, @Nullable ReadableArray args) {
+    public void receiveCommand(@NonNull WebView root, int commandId, @Nullable ReadableArray args) {
         switch (commandId) {
             case COMMAND_GO_BACK:
                 root.goBack();
@@ -536,6 +542,7 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
             case COMMAND_POST_MESSAGE:
                 try {
                     JSONObject eventInitDict = new JSONObject();
+                    assert args != null;
                     eventInitDict.put("data", args.getString(0));
                     root.loadUrl("javascript:(document.dispatchEvent(new MessageEvent('message', "
                         + eventInitDict.toString() + ")))");
@@ -547,6 +554,7 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
 
                 try {
                     JSONObject eventInitDict = new JSONObject();
+                    assert args != null;
                     eventInitDict.put("data", args.getString(0));
                     if (root.getSettings().getJavaScriptEnabled() && eventInitDict.toString() != null
                         && !TextUtils.isEmpty(eventInitDict.toString())) {
@@ -561,7 +569,7 @@ public class RNX5WebViewManager extends SimpleViewManager<WebView> {
     }
 
     @Override
-    public void onDropViewInstance(WebView webView) {
+    public void onDropViewInstance(@NonNull WebView webView) {
         super.onDropViewInstance(webView);
         ((ThemedReactContext) webView.getContext()).removeLifecycleEventListener((X5WeView) webView);
         ((X5WeView) webView).cleanupCallbacksAndDestroy();

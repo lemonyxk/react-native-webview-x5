@@ -1,12 +1,8 @@
-'use strict';
-import React, { cloneElement } from 'react';
-import {
-    WebView, NativeModules, requireNativeComponent,
-    UIManager,
-    findNodeHandle,
-} from 'react-native';
+"use strict";
+import React, { cloneElement } from "react";
+import { WebView, NativeModules, requireNativeComponent, UIManager, findNodeHandle } from "react-native";
 class X5WebView extends WebView {
-    static getX5CoreVersion = function (cb: Function): Promise {
+    static getX5CoreVersion = function(cb) {
         if (cb) {
             NativeModules.X5WebView.getX5CoreVersion(cb);
         }
@@ -16,60 +12,55 @@ class X5WebView extends WebView {
         });
     };
 
-    postMessage = (data) => {
-        UIManager.dispatchViewManagerCommand(
-            findNodeHandle(this.refs['webview']),
-            UIManager.getViewManagerConfig('RCTWebView').Commands.postMessage,
-            [String(data)]
-        )
-    }
+    static install = function() {
+        NativeModules.X5WebView.install();
+    };
 
-    injectJavascript = (data) => {
+    postMessage = data => {
         UIManager.dispatchViewManagerCommand(
-            findNodeHandle(this.refs['webview']),
-            UIManager.getViewManagerConfig('RCTWebView').Commands.injectJavascript,
+            findNodeHandle(this.refs["webview"]),
+            UIManager.getViewManagerConfig("RCTWebView").Commands.postMessage,
             [String(data)]
-        )
-    }
+        );
+    };
+
+    injectJavascript = data => {
+        UIManager.dispatchViewManagerCommand(
+            findNodeHandle(this.refs["webview"]),
+            UIManager.getViewManagerConfig("RCTWebView").Commands.injectJavascript,
+            [String(data)]
+        );
+    };
 
     reload = () => {
         UIManager.dispatchViewManagerCommand(
-            findNodeHandle(this.refs['webview']),
-            UIManager.getViewManagerConfig('RCTWebView').Commands.reload,
+            findNodeHandle(this.refs["webview"]),
+            UIManager.getViewManagerConfig("RCTWebView").Commands.reload,
             null
-        )
-    }
+        );
+    };
 
     goForward = () => {
-        UIManager.dispatchViewManagerCommand(
-            findNodeHandle(this.refs['webview']),
-            UIManager.RCTWebView.Commands.goForward,
-            null
-        )
-    }
+        UIManager.dispatchViewManagerCommand(findNodeHandle(this.refs["webview"]), UIManager.RCTWebView.Commands.goForward, null);
+    };
 
     goBack = () => {
         UIManager.dispatchViewManagerCommand(
-            findNodeHandle(this.refs['webview']),
-            UIManager.getViewManagerConfig('RCTWebView').Commands.goBack,
+            findNodeHandle(this.refs["webview"]),
+            UIManager.getViewManagerConfig("RCTWebView").Commands.goBack,
             null
-        )
-    }
+        );
+    };
 
     render() {
         const wrapper = super.render();
         const [webview, ...children] = wrapper.props.children;
-        const X5webview = (
-            <RNX5WebView
-                {...webview.props}
-                ref="webview"
-            />
-        );
+        const X5webview = <RNX5WebView {...webview.props} ref="webview" />;
 
         return cloneElement(wrapper, wrapper.props, X5webview, ...children);
     }
 }
 
-const RNX5WebView = requireNativeComponent('RNX5WebView', X5WebView);
+const RNX5WebView = requireNativeComponent("RNX5WebView", X5WebView);
 
 export default X5WebView;

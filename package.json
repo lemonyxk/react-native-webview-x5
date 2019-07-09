@@ -1,6 +1,6 @@
 {
     "name": "react-native-webview-x5",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "React native android webview",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
