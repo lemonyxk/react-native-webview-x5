@@ -7,7 +7,7 @@ function moduleAvailable(name) {
 }
 
 const create = status => {
-    if (status) return require("react-native-webview").WebView;
+    if (status) return require("react-native-select-webview").WebView;
     return require("react-native").WebView;
 };
 
